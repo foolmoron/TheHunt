@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnerwvgm2xgvx"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yqlel"]
+noise_type = 3
+seed = 120
+frequency = 0.036
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ogen0"]
+noise = SubResource("FastNoiseLite_yqlel")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tswl3"]
+albedo_color = Color(0.0117647, 0.145098, 0, 1)
+emission_enabled = true
+emission = Color(0, 1, 0.227451, 1)
+emission_energy_multiplier = 0.9
+emission_operator = 1
+emission_texture = SubResource("NoiseTexture2D_ogen0")
+
+[sub_resource type="PrismMesh" id="PrismMesh_d8onp"]
+material = SubResource("StandardMaterial3D_tswl3")
+
+[node name="Tree" type="MeshInstance3D"]
+transform = Transform3D(5.26305, 1.36225e-21, 3.29127e-23, 3.74127e-22, 17.7116, -5.42794e-24, -2.75286e-21, -3.38813e-21, 0.237219, 2.29099, 2.15135, -14.2521)
+mesh = SubResource("PrismMesh_d8onp")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-9.58232e-07, -3.48787e-16, -0.0622552, 7.64603e-15, 1, -2.17138e-17, 21.9218, -3.48787e-16, -2.72126e-09, 0.0219614, 0, 0.451866)
+mesh = SubResource("PrismMesh_d8onp")
+skeleton = NodePath("../..")
