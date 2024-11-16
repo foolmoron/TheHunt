@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnerwvgm2xgvx"]
+[gd_scene load_steps=5 format=3 uid="uid://55yjhjes0yq8"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yqlel"]
 noise_type = 3
@@ -20,11 +20,14 @@ emission_texture = SubResource("NoiseTexture2D_ogen0")
 [sub_resource type="PrismMesh" id="PrismMesh_d8onp"]
 material = SubResource("StandardMaterial3D_tswl3")
 
-[node name="Tree" type="MeshInstance3D"]
-transform = Transform3D(5.26305, 1.36225e-21, 3.29127e-23, 3.74127e-22, 17.7116, -5.42794e-24, -2.75286e-21, -3.38813e-21, 0.237219, 2.29099, 2.15135, -14.2521)
-mesh = SubResource("PrismMesh_d8onp")
+[node name="Tree" type="Node3D"]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-9.58232e-07, -3.48787e-16, -0.0622552, 7.64603e-15, 1, -2.17138e-17, 21.9218, -3.48787e-16, -2.72126e-09, 0.0219614, 0, 0.451866)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(8.69446, 2.2504e-21, 5.43709e-23, 6.18049e-22, 29.2591, -8.96684e-24, -4.54766e-21, -5.59711e-21, 0.39188, 2.08165e-12, 8.36755, 2.08165e-12)
 mesh = SubResource("PrismMesh_d8onp")
 skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-9.58232e-07, -3.48787e-16, -0.0622552, 7.64603e-15, 1, -2.17138e-17, 21.9218, -3.48787e-16, -2.72126e-09, 0.0219614, 0, 0.451866)
+mesh = SubResource("PrismMesh_d8onp")
+skeleton = NodePath("../../..")
