@@ -1,0 +1,117 @@
+[gd_scene load_steps=15 format=3 uid="uid://d3w7yy3kfaprw"]
+
+[sub_resource type="Curve3D" id="Curve3D_ikuot"]
+bake_interval = 64.6
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.16477, 0.541871, 1.04105, 0, 0, 0, 0, 0, 0, -2.0111, 0.828239, 2.2362, 0, 0, 0, 0, 0, 0, -3.26917, -0.263931, 2.29975, 0, 0, 0, 0, 0, 0, -2.72167, -1.55322, 0.280602, 0, 0, 0, 0, 0, 0, -6.36118, -0.802852, -1.15956, 0, 0, 0, 0, 0, 0, -6.6429, 2.39568, 1.46848, 0, 0, 0, 0, 0, 0, -14.0533, 3.28932, 0.262748, 0, 0, 0, 0, 0, 0, -17.0231, -5.81149, -8.43656, 0, 0, 0, 0, 0, 0, -27.9662, -0.668041, -1.2009, 0, 0, 0, 0, 0, 0, -22.6356, 4.43931, 3.98712, 0, 0, 0, 0, 0, 0, -10.6828, 7.62011, 6.15381),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 11
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nvnjq"]
+frequency = 0.0557
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t610a"]
+noise = SubResource("FastNoiseLite_nvnjq")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b31ye"]
+noise = SubResource("FastNoiseLite_nvnjq")
+
+[sub_resource type="Gradient" id="Gradient_lpbed"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_syfuy"]
+frequency = 0.0035
+offset = Vector3(531.91, 505.26, 2.08167e-14)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jurf1"]
+width = 72
+height = 52
+in_3d_space = true
+color_ramp = SubResource("Gradient_lpbed")
+noise = SubResource("FastNoiseLite_syfuy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dlx0n"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_t610a")
+emission_enabled = true
+emission = Color(1, 0.054902, 0, 1)
+emission_energy_multiplier = 1.96
+emission_operator = 1
+emission_texture = SubResource("NoiseTexture2D_b31ye")
+heightmap_texture = SubResource("NoiseTexture2D_jurf1")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_adtpl"]
+material = SubResource("StandardMaterial3D_dlx0n")
+size = Vector2(500, 500)
+subdivide_width = 1
+subdivide_depth = 1
+
+[sub_resource type="Animation" id="Animation_mv88k"]
+resource_name = "move on path"
+length = 5.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y7f22"]
+_data = {
+"move on path": SubResource("Animation_mv88k")
+}
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3x7sg"]
+
+[sub_resource type="Sky" id="Sky_4dtye"]
+sky_material = SubResource("ProceduralSkyMaterial_3x7sg")
+
+[sub_resource type="Environment" id="Environment_acmvf"]
+background_mode = 2
+sky = SubResource("Sky_4dtye")
+glow_intensity = 2.6
+fog_enabled = true
+fog_sun_scatter = 0.41
+fog_density = 0.015
+fog_aerial_perspective = 0.522
+fog_sky_affect = 0.926
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(-0.743451, -0.141025, -0.653753, -0.202182, 0.97917, 0.0187005, 0.637498, 0.14608, -0.756477, 0, 0, 0)
+curve = SubResource("Curve3D_ikuot")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(0.162725, 0.550156, -0.818872, 0.472056, -0.772174, -0.424978, -0.86624, -0.317447, -0.385418, -16.0499, 6.41313, 5.43416)
+progress = 63.8839
+
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(1.0001, 6.1298e-08, -5.81947e-08, -3.7078e-09, 1.0001, -1.13741e-07, -1.20967e-09, 7.95063e-09, 1.0001, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.881655, -7.31078, -29.809)
+mesh = SubResource("PlaneMesh_adtpl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y7f22")
+}
+autoplay = "move on path"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.876609, 0.481203, 0, -0.481203, 0.876609, 0, 5.15155, 0)
+light_color = Color(0.960784, 0.894118, 0.65098, 1)
+light_energy = 1.727
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_acmvf")
