@@ -8,6 +8,15 @@ extends Path3D
 	set(_b):
 		generate()
 
+@export var do_clear: bool:
+	get:
+		return false
+	set(_b):
+		curve.clear_points()
+		for c in tree_parent.get_children():
+			tree_parent.remove_child(c)
+			c.queue_free()
+
 @export var meshInstance: MeshInstance3D
 
 @export var tree_obj: PackedScene
