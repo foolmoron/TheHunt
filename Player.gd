@@ -8,6 +8,7 @@ extends Camera3D
 @export var path_follow: PathFollow3D
 @export var anim: AnimationPlayer
 @export var audio: AudioStreamPlayer
+@export var music: AudioStreamPlayer
 @export var end_label: Label
 var end_tmpl: String
 
@@ -19,6 +20,7 @@ var end_tmpl: String
 @export var pos_x_to_accel_z: Curve
 @export var speed_z_to_anim_speed: Curve
 @export var speed_z_to_audio_pitch: Curve
+@export var speed_z_to_music_pitch: Curve
 
 var secs := 0.0
 
@@ -52,6 +54,7 @@ func _process(delta):
 	anim.speed_scale = anim_speed
 
 	audio.pitch_scale = speed_z_to_audio_pitch.sample(speed)
+	music.pitch_scale = speed_z_to_music_pitch.sample(speed)
 
 	env.environment.fog_light_color = fog_gradient.sample(speed)
 
