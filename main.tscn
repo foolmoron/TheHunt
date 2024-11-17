@@ -79,7 +79,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 10),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.062, 0.92]
+"values": [0.062, 0.9335]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -188,7 +188,7 @@ tree_obj = ExtResource("2_jmovl")
 tree_parent = NodePath("../Trees")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3DGenerated"]
-transform = Transform3D(-0.967083, -0.161294, 0.196496, -0.0471942, 0.873356, 0.484665, -0.249794, 0.459448, -0.852309, 33.226, -0.31581, -13.6591)
+transform = Transform3D(-0.967083, -0.161294, 0.196496, -0.0471942, 0.873355, 0.484665, -0.249794, 0.459448, -0.852309, 33.226, -0.31581, -13.6591)
 progress = 38.476
 use_model_front = true
 

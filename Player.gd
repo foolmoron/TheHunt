@@ -42,9 +42,7 @@ func _process(delta):
 	var accel_z := pos_x_to_accel_z.sample(absf(position.x) / 25) * 0.2
 	speed = clampf(speed + accel_z * delta, 0, 1)
 
-	print(delta, ' ', vel_x, ' ', speed)
-
-	var anim_speed := speed_z_to_anim_speed.sample(speed) * 0.25
+	var anim_speed := speed_z_to_anim_speed.sample(speed) * 0.4
 	anim.speed_scale = anim_speed
 
 	env.environment.fog_light_color = fog_gradient.sample(speed)

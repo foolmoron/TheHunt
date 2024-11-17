@@ -98,7 +98,7 @@ func generate():
 
 func get_curvature_at_perc(perc: float) -> float:
 	var t := clampf(perc, 0.0, 0.9999)
-	var i := t * curvature.size()
+	var i := t * (curvature.size() - 1)
 	var i0 := floori(i)
 	var i1 := ceili(i)
 	var remainder := i - i0;
