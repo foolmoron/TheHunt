@@ -31,7 +31,7 @@ func _ready():
 func generate():
 	var points := [Vector3(0, 0, 0)]
 	const step := 40
-	var segments := 200
+	var segments := 120
 	if Engine.is_editor_hint():
 		segments = segments / 12
 	
