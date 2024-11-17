@@ -27,6 +27,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Input.is_key_pressed(KEY_R):
+		get_tree().reload_current_scene()
+		return
+
 	secs += delta
 
 	var size_v := get_viewport().get_visible_rect().size
