@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d3w7yy3kfaprw"]
+[gd_scene load_steps=24 format=3 uid="uid://d3w7yy3kfaprw"]
 
 [ext_resource type="Script" path="res://Path3DGenerated.gd" id="1_6tt3q"]
 [ext_resource type="PackedScene" uid="uid://55yjhjes0yq8" path="res://tree.tscn" id="2_jmovl"]
@@ -141,6 +141,24 @@ fog_light_energy = 0.2
 fog_density = 0.022
 fog_sky_affect = 0.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_rwayw"]
+font_size = 116
+font_color = Color(0.121569, 0.121569, 0.121569, 1)
+outline_size = 12
+outline_color = Color(1, 1, 1, 0.788235)
+shadow_size = 28
+shadow_color = Color(1, 0.101961, 0.101961, 0.313726)
+shadow_offset = Vector2(2.08165e-12, 2.08165e-12)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2jrgb"]
+font_size = 36
+font_color = Color(0.121569, 0.121569, 0.121569, 1)
+outline_size = 12
+outline_color = Color(1, 1, 1, 0.788235)
+shadow_size = 20
+shadow_color = Color(1, 0.101961, 0.101961, 0.278431)
+shadow_offset = Vector2(2.08165e-12, 2.08165e-12)
+
 [sub_resource type="LabelSettings" id="LabelSettings_yxhjf"]
 font_size = 54
 font_color = Color(0.121569, 0.121569, 0.121569, 1)
@@ -171,7 +189,7 @@ script = ExtResource("3_en511")
 path = NodePath("../..")
 path_follow = NodePath("..")
 anim = NodePath("../../../AnimationPlayer")
-end_label = NodePath("../../../GameOver/Label")
+end_label = NodePath("../../../GameOver/Label2")
 env = NodePath("../../../WorldEnvironment")
 fog_gradient = SubResource("Gradient_kfnj7")
 curvature_to_vel_x = SubResource("Curve_7xere")
@@ -190,7 +208,6 @@ libraries = {
 "": SubResource("AnimationLibrary_y7f22")
 }
 autoplay = "move on path"
-speed_scale = 21.38
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.876609, 0.481203, 0, -0.481203, 0.876609, 0, 5.15155, 0)
@@ -217,12 +234,40 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -17.0
+offset_bottom = -459.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "THE HUNT
+text = "THE HUNT"
+label_settings = SubResource("LabelSettings_rwayw")
+horizontal_alignment = 1
+vertical_alignment = 1
 
+[node name="Label3" type="Label" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 95.0
+offset_bottom = -347.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "by Momin Khan
+Music by Zack Frank"
+label_settings = SubResource("LabelSettings_2jrgb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "
 %SECS% seconds
-
 %BEST% seconds best
 
 Click/Tap to hunt again"
