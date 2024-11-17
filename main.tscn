@@ -17,16 +17,25 @@ point_count = 15
 [sub_resource type="Gradient" id="Gradient_kfnj7"]
 interpolation_mode = 2
 interpolation_color_space = 2
-offsets = PackedFloat32Array(0.25, 0.5, 0.75)
-colors = PackedColorArray(0.0999999, 0, 1, 1, 1, 0.883333, 0, 1, 1, 0, 0, 1)
+offsets = PackedFloat32Array(0.0667939, 0.593511, 1)
+colors = PackedColorArray(0.295663, 0.264661, 0.574675, 1, 0.628985, 0.563579, 0.068369, 1, 0.734209, 0.0967065, 0.0967065, 1)
 
 [sub_resource type="Curve" id="Curve_7xere"]
+_data = [Vector2(0, 0), 0.0, 1.57947, 0, 0, Vector2(0.463917, 0.735022), 1.4556, 1.4556, 0, 0, Vector2(1, 1), -0.128035, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_hp3in"]
+_data = [Vector2(0, 0), 0.0, 0.142651, 0, 0, Vector2(0.864261, 0.543926), 1.02829, 1.02829, 0, 0, Vector2(1, 1), 2.85962, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_1lulo"]
+min_value = -2.0
+_data = [Vector2(0.0841924, 0.609887), 0.0, -2.82706, 0, 0, Vector2(0.743986, -0.492606), -0.0940156, -0.0940156, 0, 0, Vector2(1, -1.68556), -0.229571, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_dos3w"]
+_data = [Vector2(0, 0.148159), 0.0, 0.0, 0, 0, Vector2(0.474227, 0.334735), 1.00544, 1.00544, 0, 0, Vector2(1, 1), 1.6691, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_onfif"]
 interpolation_mode = 1
@@ -70,7 +79,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 10),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.062, 0.94]
+"values": [0.062, 0.92]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -179,7 +188,7 @@ tree_obj = ExtResource("2_jmovl")
 tree_parent = NodePath("../Trees")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3DGenerated"]
-transform = Transform3D(-0.967084, -0.161294, 0.196496, -0.0471942, 0.873356, 0.484665, -0.249794, 0.459448, -0.852309, 33.226, -0.31581, -13.6591)
+transform = Transform3D(-0.967083, -0.161294, 0.196496, -0.0471942, 0.873356, 0.484665, -0.249794, 0.459448, -0.852309, 33.226, -0.31581, -13.6591)
 progress = 38.476
 use_model_front = true
 

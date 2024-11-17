@@ -34,16 +34,18 @@ func _process(delta):
 	var mouse_x := clampf(pos_v.x / size_v.x, 0, 1) * 2 - 1
 	var curvature := path.get_curvature_at_perc(path_follow.progress_ratio)
 
-	var vel_x := curvature_to_vel_x.sample(curvature) * speed
-	vel_x += mouse_x_to_vel_x.sample(mouse_x) * speed
+	var vel_x := curvature_to_vel_x.sample(absf(curvature) / PI) * signf(curvature) * -300 * sqrt(anim.speed_scale)
+	vel_x += mouse_x_to_vel_x.sample(absf(mouse_x)) * signf(mouse_x) * 500 * sqrt(anim.speed_scale)
 
 	position.x = clampf(position.x + vel_x * delta, -25, 25)
 	
-	var accel_z := pos_x_to_accel_z.sample(abs(position.x))
+	var accel_z := pos_x_to_accel_z.sample(absf(position.x) / 25) * 0.2
 	speed = clampf(speed + accel_z * delta, 0, 1)
 
-	var anim_speed := speed_z_to_anim_speed.sample(speed)
-	# anim.speed_scale = anim_speed
+	print(delta, ' ', vel_x, ' ', speed)
+
+	var anim_speed := speed_z_to_anim_speed.sample(speed) * 0.25
+	anim.speed_scale = anim_speed
 
 	env.environment.fog_light_color = fog_gradient.sample(speed)
 
