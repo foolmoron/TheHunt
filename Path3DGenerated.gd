@@ -27,7 +27,9 @@ func _ready():
 	generate()
 
 func generate():
-	print("hey")
+	if Engine.is_editor_hint():
+		return
+
 	var points := [Vector3(0, 0, 0)]
 	const step := 40
 	const segments := 200
