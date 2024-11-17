@@ -22,28 +22,33 @@ extends Path3D
 @export var tree_obj: PackedScene
 @export var tree_parent: Node3D
 
+var curvature: Array[float] = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	generate()
 
 func generate():
-	if Engine.is_editor_hint():
-		return
-
 	var points := [Vector3(0, 0, 0)]
 	const step := 40
-	const segments := 200
+	var segments := 200
+	if Engine.is_editor_hint():
+		segments = segments / 12
+	
 	for i in segments:
 		points.push_back(Vector3(i * step, randf_range(-6, 6), randf_range(-20, 20)))
 	curve.clear_points()
+	curvature.clear()
 	var tilt := 0.0
 	for i in range(1, points.size() - 1):
 		var progress := float(i) / points.size()
 		var progress_sq := progress * progress
 		curve.add_point(points[i], points[i-1], points[i+1])
 		var tilt_mult: float = lerp(16, 2, min(1.0, progress_sq * 1.2))
-		tilt += randf_range(-TAU / tilt_mult, TAU / tilt_mult)
+		var tilt_shift := randf_range(-TAU / tilt_mult, TAU / tilt_mult)
+		tilt += tilt_shift
 		curve.set_point_tilt(curve.point_count - 1, tilt)
+		curvature.push_back(tilt_shift)
 
 	for c in tree_parent.get_children():
 		tree_parent.remove_child(c)
@@ -65,16 +70,17 @@ func generate():
 		st.set_uv(Vector2(0, 0))
 		st.add_vertex(t1.origin + (t1.basis.x *  -50) + (t1.basis.y * -3.5))
 
-		if n % 5 == 0 || n % 9 == 0:
-			var inst1: Node3D = tree_obj.instantiate()
-			tree_parent.add_child(inst1)
-			inst1.position = t1.origin + (t1.basis.x * randf_range(-35, -25)) + (t1.basis.z *  randf_range(-4, 4))
-			inst1.transform.basis = t1.basis
-			var inst2: Node3D = tree_obj.instantiate()
-			tree_parent.add_child(inst2)
-			inst2.position = t1.origin + (t1.basis.x * randf_range(35, 25)) + (t1.basis.z *  randf_range(-4, 4))
-			inst2.transform.basis = t1.basis
-		
+		if not Engine.is_editor_hint():
+			if n % 5 == 0 || n % 9 == 0:
+				var inst1: Node3D = tree_obj.instantiate()
+				tree_parent.add_child(inst1)
+				inst1.position = t1.origin + (t1.basis.x * randf_range(-35, -25)) + (t1.basis.z *  randf_range(-4, 4))
+				inst1.transform.basis = t1.basis
+				var inst2: Node3D = tree_obj.instantiate()
+				tree_parent.add_child(inst2)
+				inst2.position = t1.origin + (t1.basis.x * randf_range(35, 25)) + (t1.basis.z *  randf_range(-4, 4))
+				inst2.transform.basis = t1.basis
+			
 		st.set_uv(Vector2(1, 0))
 		st.add_vertex(t1.origin + (t1.basis.x *  50) + (t1.basis.y * -3.5))
 		st.set_uv(Vector2(0, 0))
@@ -89,6 +95,14 @@ func generate():
 	var mesh := st.commit()
 	mesh.surface_set_material(0, meshInstance.mesh.surface_get_material(0))
 	meshInstance.mesh = mesh
+
+func get_curvature_at_perc(perc: float) -> float:
+	var t := clampf(perc, 0.0, 0.9999)
+	var i := t * curvature.size()
+	var i0 := floori(i)
+	var i1 := ceili(i)
+	var remainder := i - i0;
+	return lerp(curvature[i0], curvature[i1], remainder)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
