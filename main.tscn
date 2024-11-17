@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://d3w7yy3kfaprw"]
+[gd_scene load_steps=27 format=3 uid="uid://d3w7yy3kfaprw"]
 
 [ext_resource type="Script" path="res://Path3DGenerated.gd" id="1_6tt3q"]
 [ext_resource type="PackedScene" uid="uid://55yjhjes0yq8" path="res://tree.tscn" id="2_jmovl"]
 [ext_resource type="Script" path="res://Player.gd" id="3_en511"]
 [ext_resource type="Script" path="res://WorldEnvironment.gd" id="3_i2qcq"]
 [ext_resource type="Script" path="res://GameOver.gd" id="5_x7fl4"]
+[ext_resource type="AudioStream" uid="uid://y6qpwvj1iyom" path="res://step.wav" id="6_7tv1o"]
 
 [sub_resource type="Curve3D" id="Curve3D_ikuot"]
 bake_interval = 64.6
@@ -36,6 +37,12 @@ point_count = 3
 [sub_resource type="Curve" id="Curve_dos3w"]
 _data = [Vector2(0, 0.148159), 0.0, 0.0, 0, 0, Vector2(0.474227, 0.334735), 1.00544, 1.00544, 0, 0, Vector2(1, 1), 1.6691, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="Curve" id="Curve_ypmjo"]
+min_value = 0.5
+max_value = 2.0
+_data = [Vector2(0, 0.5), 0.0, 1.24558, 0, 1, Vector2(1, 1.74558), 1.24558, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_onfif"]
 interpolation_mode = 1
@@ -79,7 +86,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 10),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.062, 0.9335]
+"values": [0.062, 0.9316]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -177,6 +184,14 @@ shadow_size = 25
 shadow_color = Color(1, 0.101961, 0.101961, 0.278431)
 shadow_offset = Vector2(2.08165e-12, 2.08165e-12)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lyo5t"]
+playback_mode = 1
+random_pitch = 1.31
+random_volume_offset_db = 3.45
+streams_count = 1
+stream_0/stream = ExtResource("6_7tv1o")
+stream_0/weight = 1.0
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Path3DGenerated" type="Path3D" parent="." node_paths=PackedStringArray("meshInstance", "tree_parent")]
@@ -192,12 +207,13 @@ transform = Transform3D(-0.967083, -0.161294, 0.196496, -0.0471942, 0.873355, 0.
 progress = 38.476
 use_model_front = true
 
-[node name="Player" type="Camera3D" parent="Path3DGenerated/PathFollow3D" node_paths=PackedStringArray("path", "path_follow", "anim", "end_label", "env")]
+[node name="Player" type="Camera3D" parent="Path3DGenerated/PathFollow3D" node_paths=PackedStringArray("path", "path_follow", "anim", "audio", "end_label", "env")]
 transform = Transform3D(1.00016, -3.4884e-16, 3.48843e-16, 3.48841e-16, 1.00015, -3.48843e-16, -3.48841e-16, 3.4884e-16, 1.00016, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 script = ExtResource("3_en511")
 path = NodePath("../..")
 path_follow = NodePath("..")
 anim = NodePath("../../../AnimationPlayer")
+audio = NodePath("../../../AudioStreamPlayer")
 end_label = NodePath("../../../GameOver/Label2")
 env = NodePath("../../../WorldEnvironment")
 fog_gradient = SubResource("Gradient_kfnj7")
@@ -205,6 +221,7 @@ curvature_to_vel_x = SubResource("Curve_7xere")
 mouse_x_to_vel_x = SubResource("Curve_hp3in")
 pos_x_to_accel_z = SubResource("Curve_1lulo")
 speed_z_to_anim_speed = SubResource("Curve_dos3w")
+speed_z_to_audio_pitch = SubResource("Curve_ypmjo")
 
 [node name="Road" type="MeshInstance3D" parent="Path3DGenerated"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
@@ -283,3 +300,9 @@ Click/Tap to hunt again"
 label_settings = SubResource("LabelSettings_yxhjf")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_lyo5t")
+autoplay = true
+
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="play" binds= [0.0]]
